@@ -4,6 +4,7 @@ const input = document.querySelector('.autocomplete-input');
 let tags = [];
 let itemstagsContent = [];
 
+//function to get countries json from api
 const getData = () => {
     const apiURL = 'https://restcountries.eu/rest/v2/all';
 	let http = new XMLHttpRequest();
@@ -26,12 +27,14 @@ getData().then(result => {
     renderList(tagsContent)
 });
 
+// clear list before re-render
 const clearListItems = () => {
     document.querySelectorAll('li').forEach(item => {
         item.parentElement.removeChild(item);
       });
 }
 
+// render the dropdown
 const renderList = (items) => {
     items.forEach(item => {
         let listItem = document.createElement('li');
@@ -42,6 +45,7 @@ const renderList = (items) => {
     });
 }
 
+// creating the tag input
 const createTag = (ele) => {
     let createTag = document.createElement('div');
     createTag.setAttribute('class', 'tag');
@@ -62,6 +66,7 @@ const createTag = (ele) => {
     return createTag;
 }
 
+// remove the tab on click of 'x'
 const clearTag = (ele) => {
     ele.parentElement.remove();
     tags.splice(tags.indexOf(ele.getAttribute('data-item')),1)
@@ -76,6 +81,7 @@ const clearTags = () => {
     });
 }
 
+//add tag to the tag input container
 const addTags = () => {
     clearTags();
     tags.slice().reverse().forEach(tag => {
@@ -83,6 +89,7 @@ const addTags = () => {
     });
 }
 
+// add the tag if found in the dropdown
 const addEle = (val) => {
     if(tagsContent.includes(val.charAt(0).toUpperCase() + val.slice(1)
         )) {
@@ -97,10 +104,14 @@ const addEle = (val) => {
         document.querySelector('.no-data').style.display = 'block';
     }
 }
+
+// add/clear the tag on keypress - Enter & Backspace
 input.addEventListener('keyup', (e) => {
     document.querySelector('.no-data').style.display = 'none';
     if (e.key === 'Enter') {
         addEle(e.target.value)
+    } else if (e.key === 'Backspace') {
+        clearTag(document.querySelectorAll('.tag')[document.querySelectorAll('.tag').length - 1].lastChild)
     } else {
         dropdownList.style.display = 'block';
     }
