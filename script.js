@@ -105,13 +105,11 @@ const addEle = (val) => {
     }
 }
 
-// add/clear the tag on keypress - Enter & Backspace
+// add the tag on keypress - Enter
 input.addEventListener('keyup', (e) => {
     document.querySelector('.no-data').style.display = 'none';
     if (e.key === 'Enter') {
         addEle(e.target.value)
-    } else if (e.key === 'Backspace') {
-        clearTag(document.querySelectorAll('.tag')[document.querySelectorAll('.tag').length - 1].lastChild)
     } else {
         dropdownList.style.display = 'block';
     }
