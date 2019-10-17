@@ -47,8 +47,8 @@ const createTag = (ele) => {
     createTag.setAttribute('class', 'tag');
     const span = document.createElement('span');
     span.innerHTML = ele;
-    const closeIcon = document.createElement('i');
-    closeIcon.innerHTML = 'close';
+    const closeIcon = document.createElement('strong');
+    closeIcon.innerHTML = 'x';
     closeIcon.setAttribute('class', 'remove-icon');
     closeIcon.setAttribute('data-item', ele);
     closeIcon.addEventListener('click', (e) => (
@@ -92,9 +92,16 @@ const addEle = (val) => {
             addTags();
             input.value = '';
         }
+    else {
+        dropdownList.style.display = 'none';
+        document.querySelector('.no-data').style.display = 'block';
+    }
 }
 input.addEventListener('keyup', (e) => {
+    document.querySelector('.no-data').style.display = 'none';
     if (e.key === 'Enter') {
         addEle(e.target.value)
+    } else {
+        dropdownList.style.display = 'block';
     }
 });

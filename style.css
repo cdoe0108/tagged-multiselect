@@ -31,7 +31,7 @@ body{
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 1px 1px #fff;
     cursor: default;
 }
-.tag i {
+.tag .remove-icon {
     font-size: 16px;
     color: #666;
     margin-left: 5px;
@@ -51,14 +51,19 @@ body{
     background: #fff;
     left: 0;
     right: 0;
-    /* display: none; */
     border: 2px solid #ccc;
+    overflow: auto;
+    max-height: 200px;
 }
 .autocomplete-dropdown li{
     padding: 5px 6px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
 }
-.autocomplete-input:focus ~.autocomplete-dropdown{
-    display: block;
+.no-data{
+    display: none;
+    text-align: center;
+    padding: 5px 8px;
+    background: #fff;
+    border: 2px solid #ccc;
 }
