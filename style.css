@@ -67,3 +67,10 @@ body{
     background: #fff;
     border: 2px solid #ccc;
 }
+
+#displayJSON{
+    width: 75%;
+    margin: 220px auto 0 auto;
+    position: relative;
+    text-transform: capitalize;
+}

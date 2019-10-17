@@ -31,7 +31,8 @@ getData().then(result => {
 const clearListItems = () => {
     document.querySelectorAll('li').forEach(item => {
         item.parentElement.removeChild(item);
-      });
+    });
+    document.getElementById('displayJSON').textContent = ''
 }
 
 // render the dropdown
@@ -73,6 +74,7 @@ const clearTag = (ele) => {
     tagsContent.push(ele.getAttribute('data-item').charAt(0).toUpperCase() + ele.getAttribute('data-item').slice(1))
     clearListItems()
     renderList(tagsContent);
+    document.getElementById('displayJSON').textContent = tags
 }
 
 const clearTags = () => {
@@ -87,6 +89,7 @@ const addTags = () => {
     tags.slice().reverse().forEach(tag => {
         tagContainer.prepend(createTag(tag));
     });
+    document.getElementById('displayJSON').textContent = tags
 }
 
 // add the tag if found in the dropdown
