@@ -2,7 +2,7 @@ const dropdownList = document.getElementById('dropdown-list')
 const tagContainer = document.querySelector('.autocomplete-wrapper');
 const input = document.querySelector('.autocomplete-input');
 let tags = [];
-let tagsContent = [];
+let itemstagsContent = [];
 
 const getData = () => {
     const apiURL = 'https://restcountries.eu/rest/v2/all';
@@ -22,17 +22,25 @@ const getData = () => {
 }
 
 getData().then(result => {
-    result.forEach(item => {
-        let listItem = document.createElement('li');
-        listItem.id = item.name;
-        listItem.textContent = item.name;
-        listItem.addEventListener('click', (e) => (
-            addTags(e.target)
-        ));
-        dropdownList.appendChild(listItem);
-        tagsContent.push(item.name)
-      });
+    tagsContent = result.map(item => item.name)
+    renderList(tagsContent)
 });
+
+const clearListItems = () => {
+    document.querySelectorAll('li').forEach(item => {
+        item.parentElement.removeChild(item);
+      });
+}
+
+const renderList = (items) => {
+    items.forEach(item => {
+        let listItem = document.createElement('li');
+        listItem.id = item;
+        listItem.textContent = item;
+        listItem.addEventListener('click', (e) => (addEle(e.target.textContent.charAt(0).toLowerCase() + e.target.textContent.slice(1))));
+        dropdownList.appendChild(listItem);
+    });
+}
 
 const createTag = (ele) => {
     let createTag = document.createElement('div');
@@ -48,12 +56,18 @@ const createTag = (ele) => {
     ));
     createTag.appendChild(span);
     createTag.appendChild(closeIcon);
+    tagsContent.splice(tagsContent.indexOf(ele.charAt(0).toUpperCase() + ele.slice(1)),1)
+    clearListItems()
+    renderList(tagsContent)
     return createTag;
 }
 
 const clearTag = (ele) => {
     ele.parentElement.remove();
-    tags.splice(tags.indexOf(ele.getAttribute('data-item')),1,...tags)
+    tags.splice(tags.indexOf(ele.getAttribute('data-item')),1)
+    tagsContent.push(ele.getAttribute('data-item').charAt(0).toUpperCase() + ele.getAttribute('data-item').slice(1))
+    clearListItems()
+    renderList(tagsContent);
 }
 
 const clearTags = () => {
@@ -69,16 +83,18 @@ const addTags = () => {
     });
 }
 
-
-input.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter') {
-        if(tagsContent.includes(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1)
+const addEle = (val) => {
+    if(tagsContent.includes(val.charAt(0).toUpperCase() + val.slice(1)
         )) {
-            e.target.value.split(',').forEach(tag => {
+            val.split(',').forEach(tag => {
                 tags.push(tag);  
               });
-              addTags();
-              input.value = '';
+            addTags();
+            input.value = '';
         }
+}
+input.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+        addEle(e.target.value)
     }
 });

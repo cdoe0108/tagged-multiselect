@@ -19,11 +19,11 @@ body{
     flex-wrap: wrap;
 }
 .autocomplete-wrapper .tag{
-    height: 30px;
-    margin: 5px;
-    padding: 5px 6px;
+    height: 15px;
+    margin: 2px;
+    padding: 3px 6px;
     border: 1px solid #ccc;
-    border-radius: 3px;
+    border-radius: 2px;
     background: #eee;
     display: flex;
     align-items: center;
@@ -37,7 +37,7 @@ body{
     margin-left: 5px;
 }
 .autocomplete-input{
-    padding: 5px;
+    padding: 2px;
     font-size: 16px;
     border: 0;
     outline: none;
@@ -46,14 +46,19 @@ body{
 }
 .autocomplete-dropdown{
     position: absolute;
-    top: 45px;
+    top: 40px;
     list-style: none;
     background: #fff;
     left: 0;
     right: 0;
+    /* display: none; */
+    border: 2px solid #ccc;
 }
 .autocomplete-dropdown li{
     padding: 5px 6px;
     border-bottom: 1px solid #eee;
     cursor: pointer;
+}
+.autocomplete-input:focus ~.autocomplete-dropdown{
+    display: block;
 }
